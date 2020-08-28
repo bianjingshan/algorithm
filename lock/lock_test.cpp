@@ -49,6 +49,13 @@ void threadEntryAtomicFlag(int n) {
     }
 }
 
+std::atomic<uint64_t> g_num_atomic(0);
+void threadEntryAtomic(int n) {
+    for (int i = 0; i < n; ++i) {
+        g_num_atomic++;
+    }
+}
+
 
 uint64_t currentTimeUsec(void) {
     timeval tv;
@@ -58,9 +65,14 @@ uint64_t currentTimeUsec(void) {
 
 typedef void (*thread_entry_t)(int n);
 
-void test(thread_entry_t thread_entry, const char *test_name) {
+void test(thread_entry_t thread_entry, const char *test_name, bool atomic_num = false) {
 #define THREAD_NUM 10
-    g_num = 0;
+    if (atomic_num) {
+        g_num_atomic = 0;
+    } else {
+        g_num = 0;
+    }
+
     uint64_t start_time;
     uint64_t end_time;
     start_time = currentTimeUsec();
@@ -74,7 +86,10 @@ void test(thread_entry_t thread_entry, const char *test_name) {
     }
     end_time = currentTimeUsec();
     printf("\n");
-    printf("%s g_num: %lu\n", test_name, g_num);
+    if (atomic_num) {
+        g_num = g_num_atomic;
+    }
+    printf("%s num: %lu\n", test_name, g_num);
     printf("%s time cost: %lu us\n", test_name, end_time - start_time);
 }
 
@@ -86,6 +101,7 @@ int main()
     test(threadEntryMutexLockGuard, "mutex_lock_guard");
     test(threadEntrySpinLock, "spin_lock");
     test(threadEntryAtomicFlag, "atomic_flag");
+    test(threadEntryAtomic, "atomic", true);
     printf("\n\n");
     return 0;
 }
