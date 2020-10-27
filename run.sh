@@ -1,2 +1,2 @@
 cd bin
-./path_plan
+./mutex
