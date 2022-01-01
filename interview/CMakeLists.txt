@@ -7,4 +7,5 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 add_executable(mulit_thread mulit_thread.cpp)
 add_executable(sync_print sync_print.cpp)
-add_executable(matrix_multiplication matrix_multiplication.cpp)
+add_subdirectory(matrix_multiplication)
+add_subdirectory(arithmetic_expression_parsing)
