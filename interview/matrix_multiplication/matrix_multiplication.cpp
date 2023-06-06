@@ -97,6 +97,7 @@ bool ComplexMatMul(ComplexMat &a, ComplexMat &b, ComplexMat &output) {
       }
     }
   }
+  return true;
 }
 
 void ComplexMatMulTest() {
@@ -219,6 +220,7 @@ bool TripleMatMul(TripleMat &a, TripleMat &b, TripleMat &output) {
       }
     }
   }
+  return true;
 }
 
 void TripleMatMulTest() {
