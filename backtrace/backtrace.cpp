@@ -6,7 +6,7 @@
 #include <pthread.h>
 #include <execinfo.h>
 
-#define BACKTRACE_SIZE 16
+#define BACKTRACE_SIZE 128
 
 extern int add(int num);
 extern void CreateTestThread();
